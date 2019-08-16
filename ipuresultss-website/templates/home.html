@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+	<div class="jumbotron text-center">
+		<h1> IPU Results </h1>
+		<br>
+		<br>
+		<p>Enter the enrollment number to search for: (eg. 03111502716) :</p>
+		<form method="POST">
+			<div class="form-group">
+				<input id="sstr" class="form-control" type="text" name="search_string">
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+			<br>	{{ err }}
+		</form>
+	</div>
+{% endblock %}

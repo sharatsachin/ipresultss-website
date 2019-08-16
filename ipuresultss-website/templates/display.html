@@ -1,0 +1,113 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+	<div class="jumbotron">
+		<h1>Scorecard</h1> 
+		Name : {{data.name}} <br>
+		Enrollment No : {{inp}} <br>
+		College : {{data.college}} <br>
+		Batch : {{data.batch}} <br>
+		<hr class="style5">
+		
+		<div id="accordion">
+		{% for x in data.sems %}
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h2 class="mb-0">
+					<button class="btn btn-link" data-toggle="collapse" data-target= {{'#collapse' ~ x}} aria-expanded="true" aria-controls="collapseOne">
+						Semester: {{x}}
+					</button>
+				</h2>
+			</div>
+			<div id={{'collapse' ~ x}} class="collapse" aria-labelledby="headingOne" data-parent="#accordion" style="padding: 10px">
+				<div class="table-responsive">
+					<table class="table table-sm table-hover" style="font-size: 14px;">
+						<thead>
+							<tr>
+								<th style="width: 70%">Subject</th>
+								<th style="width: 10%">Internal</th>
+								<th style="width: 10%">External</th>
+								<th style="width: 10%">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for sk, sv in subjects.items() %}
+							{% if sv.s == x %}
+								<tr>
+									{% set ks = sk|string %}
+									<td> {{ sv.n }} </td>
+									<td> {{ data[ks][0] }} </td>
+									<td> {{ data[ks][1] }} </td>
+									<td> {{ data[ks][2] }} 
+										{% if data[ks][2] >= 40 %}
+											<ion-icon name="checkmark-circle-outline"></ion-icon>
+										{% else %}
+											<ion-icon name="close-circle-outline"></ion-icon>
+										{% endif %}
+									</td>
+								</tr>
+							{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				{% set tot = 'tot' ~ x %}
+				{% set totw = 'totw' ~ x %}
+				{% set ns = 'ns' ~ x %}
+				{% set nsw = 'nsw' ~ x %}
+				{% set rank = 'rank' ~ x %}
+				Aggregate Percentage : {{ (data[tot] / data[ns]) | round(3)}} ({{data[tot]}}/{{data[ns] * 100}}) <br>
+				Credit Percentage : {{ (data[totw] / data[nsw]) | round(3)}} ({{data[totw]}}/{{data[nsw] * 100}}) <br>
+				Class Rank : {{ (data[rank] | int) }}
+			</div>
+		</div>
+
+		{% endfor %}
+		
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h2 class="mb-0">
+					<button class="btn btn-link" data-toggle="collapse" data-target= "#collapseX" aria-expanded="true" aria-controls="collapseOne">
+						Rankings
+					</button>
+				</h2>
+			</div>
+			<div id="collapseX" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" style="padding: 10px">
+				<table data-toggle="table" class="table table-sm table-hover" style="font-size: 14px;">
+					<thead>
+						<tr>
+							<th data-sortable="true">Enrollment No.</th>
+							<th data-sortable="true">Name               </th>
+							<th data-sortable="true">Semester 1</th>
+							<th data-sortable="true">Semester 2</th>
+							<th data-sortable="true">Semester 3</th>
+							<th data-sortable="true">Semester 4</th>
+							<th data-sortable="true">Semester 5</th>
+							<th data-sortable="true">Semester 6</th>
+							<th data-sortable="true">Average %</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for row in rankdicts %}
+						{% if row.per5 > 0 %}
+						<tr>
+							<td> {{row.en_no}} </td>
+							<td> {{row.name}} </td>
+							<td> {{row.per1 | round(2)}} </td>
+							<td> {{row.per2 | round(2)}} </td>
+							<td> {{row.per3 | round(2)}} </td>
+							<td> {{row.per4 | round(2)}} </td>
+							<td> {{row.per5 | round(2)}} </td>
+							<td> {{row.per6 | round(2)}} </td>
+							<td> {{row.per0 | round(2)}} </td>
+						</tr>
+						{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		</div> 
+	</div>
+{% endblock %}
