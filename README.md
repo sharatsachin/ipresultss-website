@@ -17,7 +17,7 @@ The problem with this code was that it only showed the percentages and ranks, bu
 
 This leads to my second attempt at solving the problem, a full fledged website that displayed the results of the student in an elegant way. Also, it does not need to be modified for different pdfs and courses, it works for all of them.
 
-[Here](https://github.com/sharatsachin/ipresultss-website/tree/master/2nd-attempt) is my second attempt at this, with the live version hosted on [Heroku](https://ipuresultss.herokuapp.com/)
+[Here](https://github.com/sharatsachin/ipresultss-website/blob/master/Scripts-PDF-to-json.ipynb) is my second attempt at writinga script to extract usefull data from the pdf dump, with the live version of the website hosted on [Heroku](https://ipuresultss.herokuapp.com/)
 
 Here is a screenshot of the results page.
 
